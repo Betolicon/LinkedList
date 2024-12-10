@@ -130,6 +130,14 @@ class LinkedList{
         result += 'null'
         return result
     }
+
+    insertAt(value, index){
+
+    }
+
+    removeAt(index){
+        
+    }
 }
 
 module.exports = { LinkedList };

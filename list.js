@@ -66,16 +66,23 @@ class LinkedList{
             }
             return current.value
         }
-
     } 
 
-    previous(){
+    previous(len){
         let cont = 0
-        const len = this.size()
         let current = this.head
-        while(cont < len-2){
+        while(cont < len){
             current = current.next
             cont += 1
+        }
+        return current
+    }
+
+    after(len){
+        let current = this.head
+        while(len < this.size()){
+            current = current.next
+            len += 1
         }
         return current
     }
@@ -88,10 +95,10 @@ class LinkedList{
             this.tail = null
         }
         else{
-            this.tail = this.previous()            
+            const len = this.size()
+            this.tail = this.previous(len-2)            
             this.tail.next = null          
         }
-        return
     }
 
     contains(value){
@@ -132,11 +139,39 @@ class LinkedList{
     }
 
     insertAt(value, index){
-
+        let len = this.size()
+        if(index < 0 || index > len)
+            return 'Invalid index'
+        else if (index === 0)
+            this.prepend(value)
+        else if (index === len)
+            this.append(value)
+        else{
+            const result = this.previous(index-1)
+            const aux = this.after(len-index)
+            let newNode = new Node(value);
+            result.next  = newNode
+            newNode.next = aux
+            return
+        }
     }
 
     removeAt(index){
-        
+        let len = this.size()
+        if(index < 0 || index > len)
+            return 'Invalid index'
+        else if (index === 0){
+            this.head = this.head.next
+            return
+        }
+        else if (index === len)
+            return this.pop()
+        else{
+            const result = this.previous(index-1)
+            const aux = this.after(len-index-1)
+            result.next = aux
+            return  
+        }
     }
 }
 
